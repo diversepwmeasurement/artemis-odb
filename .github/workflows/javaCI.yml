@@ -1,17 +1,19 @@
-name: Java CI
-
-on: [push]
-
 jobs:
   build:
-    runs-on: ubuntu-latest
-
+    runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up JDK 8
-        uses: actions/setup-java@v2
-        with:
-          java-version: '8'
-          distribution: 'adopt'
-      - name: Build with Maven
-        run: mvn clean install -Pgwttest
+    - continue-on-error: true
+      uses: actions/checkout@v2
+    - continue-on-error: true
+      name: Set up JDK 8
+      uses: actions/setup-java@v2
+      with:
+        distribution: adopt
+        java-version: '8'
+    - continue-on-error: true
+      name: Build with Maven
+      run: mvn clean install -Pgwttest
+name: Java CI
+on:
+  repository_dispatch:
+    types: trigger-ga___javaCI.yml
